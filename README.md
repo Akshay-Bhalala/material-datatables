@@ -28,49 +28,74 @@ You must also have these installed in your project:
 
 ---
 
-## 🛠️ Usage Example
+
+## 🖼️ Screenshot
+
+Below is an example screenshot of the MuiDataTable in action:
+
+![MuiDataTable Example](./public/mui-datatable-screenshot.png)
+
+---
+
+## 🛠️ Full Working Example (App.tsx)
 
 ```tsx
-import { MuiDataTable } from 'material-datatables';
-import type { GridColDef, GridValidRowModel } from '@mui/x-data-grid';
+import { MuiDataTable } from "material-datatables";
+import type { GridColDef, GridValidRowModel } from "@mui/x-data-grid";
+import "./App.css";
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'firstName', headerName: 'First name', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
-  { field: 'age', headerName: 'Age', type: 'number', width: 90 },
+  { field: "id", headerName: "ID", width: 70 },
+  { field: "firstName", headerName: "First name", width: 130 },
+  { field: "lastName", headerName: "Last name", width: 130 },
+  { field: "age", headerName: "Age", type: "number", width: 90 },
   {
-    field: 'fullName',
-    headerName: 'Full name',
+    field: "fullName",
+    headerName: "Full name",
     width: 160,
-    valueGetter: (params: any) => `${params.row.firstName || ''} ${params.row.lastName || ''}`,
     sortable: false,
     filterable: false,
   },
 ];
 
 const rows: GridValidRowModel[] = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
+  { id: 1, lastName: "Snow", firstName: "Jon", age: 35, fullName: "Jon Snow" },
+  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42, fullName: "Cersei Lannister" },
+  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45, fullName: "Jaime Lannister" },
+  { id: 4, lastName: "Stark", firstName: "Arya", age: 16, fullName: "Arya Stark" },
+  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: 34, fullName: "Daenerys Targaryen" },
 ];
 
-<MuiDataTable
-  title="User List"
-  columns={columns}
-  rows={rows}
-  containerSx={{ height: 500, width: '100%', boxShadow: '0 8px 32px rgba(0,0,0,0.18)', borderRadius: 12, background: '#fff', margin: '0 auto' }}
-  bgColor="#22223b" // Custom background color
-  textColor="#f2e9e4" // Custom text color
-  filterColor="#9a8c98" // Custom filter option color
-  pageSizeOptions={[5, 10, 25, 100]}
-  checkboxSelection
-  disableRowSelectionOnClick
-  onRowClick={(params) => console.log('Row clicked:', params)}
-  sortingOrder={['asc', 'desc']}
-/>
+function App() {
+  return (
+    <div>
+      <h1>Hello World</h1>
+      <MuiDataTable
+        title="User List"
+        columns={columns}
+        rows={rows}
+        containerSx={{
+          height: 500,
+          width: "100%",
+          boxShadow: "0 8px 32px rgba(255, 0, 0, 0.18)",
+          borderRadius: 12,
+          background: "#fff",
+          margin: "0 auto",
+        }}
+        bgColor="white" // Custom background color
+        textColor="black" // Custom text color
+        filterColor="blue" // Custom filter option color
+        pageSizeOptions={[5, 10, 25, 100]}
+        checkboxSelection
+        disableRowSelectionOnClick
+        onRowClick={(params) => console.log("Row clicked:", params)}
+        sortingOrder={["asc", "desc"]}
+      />
+    </div>
+  );
+}
+
+export default App;
 ```
 
 ---
@@ -79,7 +104,8 @@ const rows: GridValidRowModel[] = [
 
 - **Sorting, Filtering, Pagination:** All built-in DataGrid features are supported via props.
 - **Styling:** Use `containerSx` for the outer container, or `className` for custom CSS.
-- **Color Customization:** Use `bgColor`, `textColor`, and `filterColor` props to control the background, text, and filter UI colors.
+- **Color Customization:** Use `bgColor`, `textColor`, and `filterColor` props to control the background, text, and filter UI colors. 
+  - **Accessibility:** The filter panel always uses a white background and readable text color, so filter options are always visible. The `filterColor` prop customizes highlights (checkboxes, focus) in the filter panel.
 - **Event Handling:** Use any DataGrid event prop (e.g., `onRowClick`, `onSortModelChange`).
 - **Custom Columns:** Use `valueGetter`, `renderCell`, etc. for advanced column logic.
 - **Row Selection:** Enable with `checkboxSelection`.
@@ -101,6 +127,7 @@ const rows: GridValidRowModel[] = [
   onRowClick={(params) => alert(`Clicked row ID: ${params.id}`)}
   containerSx={{ maxWidth: 900, margin: '2rem auto', background: '#fff' }}
 />
+// Note: The filter panel always uses a white background and readable text color for accessibility, regardless of table background/text color. The filterColor prop still customizes highlights (checkboxes, focus) in the filter panel.
 ```
 
 ---
@@ -115,7 +142,7 @@ const rows: GridValidRowModel[] = [
 | `containerSx`  | `object`            | Custom styles for the outer Box container|
 | `bgColor`      | `string`            | Custom background color for the table    |
 | `textColor`    | `string`            | Custom text color for the table          |
-| `filterColor`  | `string`            | Custom color for filter UI elements      |
+| `filterColor`  | `string`            | Custom color for filter UI highlights    |
 | ...rest        | All DataGridProps   | All other DataGrid props are supported   |
 
 ---

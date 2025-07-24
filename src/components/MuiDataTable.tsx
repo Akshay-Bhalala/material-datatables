@@ -31,8 +31,9 @@ const MuiDataTable: React.FC<MuiDataTableProps> = ({
 
   // Fallbacks for colors
   const resolvedBgColor = bgColor || (theme.palette.mode === "dark" ? theme.palette.background.default : "#fff");
-  const resolvedTextColor = textColor || (theme.palette.mode === "dark" ? "#fff" : "#232323");
+  const resolvedTextColor = textColor || (theme.palette.mode === "dark" ? "#fff" : theme.palette.text.primary);
   const resolvedFilterColor = filterColor || theme.palette.primary.main;
+  const resolvedFilterTextColor = theme.palette.mode === "dark" ? "#fff" : theme.palette.text.primary;
 
   return (
     <Box
@@ -77,8 +78,13 @@ const MuiDataTable: React.FC<MuiDataTableProps> = ({
             bgcolor: resolvedBgColor,
             color: resolvedTextColor,
           },
-          '& .MuiDataGrid-filterForm': {
-            bgcolor: resolvedBgColor,
+          // Filter panel and popover
+          '& .MuiDataGrid-panel, & .MuiDataGrid-panelWrapper, & .MuiDataGrid-filterForm': {
+            bgcolor: '#fff', // Always white background for filter panel for contrast
+            color: resolvedFilterTextColor,
+          },
+          // Filter option highlights
+          '& .MuiDataGrid-filterForm .Mui-focused, & .MuiDataGrid-filterForm .MuiCheckbox-root.Mui-checked': {
             color: resolvedFilterColor,
           },
           '& .MuiDataGrid-panelFooter': {
@@ -93,12 +99,10 @@ const MuiDataTable: React.FC<MuiDataTableProps> = ({
             color: resolvedTextColor,
           },
         }}
-        // Inline styles here (not passed as sx)
         style={{
           border: 0,
           fontSize: 15,
         }}
-        // Internal class styling via classes or CSS is best for full control
       />
     </Box>
   );
