@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # material-datatables
 
 A fully functional and customizable Material UI Data Table component based on MUI DataGrid v7+. This package provides a pre-configured, flexible, and accessible data table for React projects, with all the power of MUI's DataGrid and sensible defaults for rapid development.
@@ -130,3 +131,6 @@ Pull requests and issues are welcome! Please open an issue to discuss your ideas
 - [Material UI Theming](https://mui.com/material-ui/customization/theming/)
 - [MUI DataGrid API Reference](https://mui.com/x/api/data-grid/data-grid/) 
 
+=======
+# material-datatables
+>>>>>>> 4b8c046e26cb7f83964d084e5aab1a73c43d4645
