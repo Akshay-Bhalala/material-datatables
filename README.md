@@ -20,16 +20,8 @@ A beautiful, simple, and customizable Material UI Data Table component based on 
 npm install material-datatables
 ```
 
-### Peer Dependencies
-You must also have these installed in your project:
-- `react` >= 18.0.0
-- `@mui/material` >= 7.2.0
-- `@mui/x-data-grid` >= 7.2.0
 
----
-
-
-## 🖼️ Screenshot
+## 🖼️ Snapshot
 
 Below is an example screenshot of the MuiDataTable in action:
 
