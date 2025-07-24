@@ -1,4 +1,4 @@
-# ui-datatables
+# material-datatables
 
 A fully-featured, customizable Material UI Data Table React component with sorting, filtering, pagination, selection, column management, and more. Built for flexibility, performance, and beautiful UI.
 
@@ -23,13 +23,13 @@ A fully-featured, customizable Material UI Data Table React component with sorti
 ## 🚀 Installation
 
 ```bash
-npm install ui-datatables
+npm install material-datatables
 ```
 
 or
 
 ```bash
-yarn add ui-datatables
+yarn add material-datatables
 ```
 
 ---
@@ -38,7 +38,7 @@ yarn add ui-datatables
 
 ```tsx
 import React from 'react';
-import { MuiDataTable } from 'ui-datatables';
+import { MuiDataTable } from 'material-datatables';
 import { Add, Refresh } from '@mui/icons-material';
 
 const columns = [
@@ -146,4 +146,4 @@ MIT
 ---
 
 ## 💡 Contributing
-Pull requests and issues are welcome! Please open an issue or PR on [GitHub](https://github.com/yourusername/ui-datatables).
+Pull requests and issues are welcome! Please open an issue or PR on [GitHub](https://github.com/yourusername/material-datatables).
