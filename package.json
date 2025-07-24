@@ -1,6 +1,6 @@
 {
   "name": "material-datatables",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A fully functional and customizable Material UI Data Table component based on MUI DataGrid.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
