@@ -1,1 +1,1 @@
-export { default as MuiDataTable } from './components/MuiDataTable'; 
+export { default as MuiDataTable } from './components/MuiDataTable';

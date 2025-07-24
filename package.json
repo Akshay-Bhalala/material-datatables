@@ -1,14 +1,14 @@
 {
   "name": "material-datatables",
   "version": "1.0.9",
-  "description": "A fully functional and customizable Material UI Data Table component based on MUI DataGrid.",
+  "description": "A fully-featured, customizable Material UI Data Table React component with sorting, filtering, pagination, selection, and more.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "author": "Akshay Bhalala",
+  "author": "Akshay Bhalala akshaybhalala@gmail.com",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -24,25 +24,20 @@
     "component",
     "typescript"
   ],
-  "peerDependencies": {},
+  "homepage": "https://github.com/Akshay-Bhalala/material-datatables.git",
   "scripts": {
     "build": "rollup -c",
     "prepare": "npm run build"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^28.0.6",
-    "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-typescript": "^12.1.4",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "rollup": "^4.45.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
+    "tslib": "^2.8.1",
     "typescript": "^5.8.3"
-  },
-  "dependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "@mui/material": "^7.2.0",
-    "@mui/x-data-grid": "^8.9.1",
-    "tslib": "^2.8.1"
-  },
-  "type": "module"
+  }
 }

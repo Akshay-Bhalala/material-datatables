@@ -1,7 +1,5 @@
 import typescript from '@rollup/plugin-typescript';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
 
 export default {
   input: 'src/index.ts',
@@ -10,7 +8,6 @@ export default {
       file: 'dist/index.js',
       format: 'cjs',
       sourcemap: true,
-      exports: 'named',
     },
     {
       file: 'dist/index.esm.js',
@@ -20,14 +17,7 @@ export default {
   ],
   plugins: [
     peerDepsExternal(),
-    nodeResolve(),
-    commonjs(),
     typescript({ tsconfig: './tsconfig.json' }),
   ],
-  external: [
-    'react',
-    'react-dom',
-    '@mui/material',
-    '@mui/x-data-grid',
-  ],
-}; 
+  external: ['react', 'react-dom'],
+};

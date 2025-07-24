@@ -1,1 +1,0 @@
-// Utility functions for MuiDataTable can be added here. 
