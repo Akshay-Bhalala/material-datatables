@@ -39,7 +39,14 @@ const columns: GridColDef[] = [
   { field: 'firstName', headerName: 'First name', width: 130 },
   { field: 'lastName', headerName: 'Last name', width: 130 },
   { field: 'age', headerName: 'Age', type: 'number', width: 90 },
-  { field: 'fullName', headerName: 'Full name', width: 160, valueGetter: (params) => `${params.row.firstName || ''} ${params.row.lastName || ''}` },
+  {
+    field: 'fullName',
+    headerName: 'Full name',
+    width: 160,
+    valueGetter: (params: any) => `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+    sortable: false,
+    filterable: false,
+  },
 ];
 
 const rows: GridValidRowModel[] = [
@@ -54,7 +61,45 @@ const rows: GridValidRowModel[] = [
   title="User List"
   columns={columns}
   rows={rows}
-  containerSx={{ height: 400, width: '100%' }}
+  containerSx={{ height: 500, width: '100%', boxShadow: '0 8px 32px rgba(0,0,0,0.18)', borderRadius: 12, background: '#fff', margin: '0 auto' }}
+  bgColor="#22223b" // Custom background color
+  textColor="#f2e9e4" // Custom text color
+  filterColor="#9a8c98" // Custom filter option color
+  pageSizeOptions={[5, 10, 25, 100]}
+  checkboxSelection
+  disableRowSelectionOnClick
+  onRowClick={(params) => console.log('Row clicked:', params)}
+  sortingOrder={['asc', 'desc']}
+/>
+```
+
+---
+
+## 🧩 Advanced Usage & Tips
+
+- **Sorting, Filtering, Pagination:** All built-in DataGrid features are supported via props.
+- **Styling:** Use `containerSx` for the outer container, or `className` for custom CSS.
+- **Color Customization:** Use `bgColor`, `textColor`, and `filterColor` props to control the background, text, and filter UI colors.
+- **Event Handling:** Use any DataGrid event prop (e.g., `onRowClick`, `onSortModelChange`).
+- **Custom Columns:** Use `valueGetter`, `renderCell`, etc. for advanced column logic.
+- **Row Selection:** Enable with `checkboxSelection`.
+- **Page Size Options:** Use `pageSizeOptions` to control pagination.
+- **Full DataGrid API:** Pass any [DataGrid prop](https://mui.com/x/api/data-grid/data-grid-props/) directly to `<MuiDataTable />`.
+
+---
+
+**Example:**
+```tsx
+<MuiDataTable
+  columns={columns}
+  rows={rows}
+  checkboxSelection
+  pageSizeOptions={[5, 10, 25]}
+  bgColor="#232323"
+  textColor="#fff"
+  filterColor="#1976d2"
+  onRowClick={(params) => alert(`Clicked row ID: ${params.id}`)}
+  containerSx={{ maxWidth: 900, margin: '2rem auto', background: '#fff' }}
 />
 ```
 
@@ -68,6 +113,9 @@ const rows: GridValidRowModel[] = [
 | `rows`         | `GridValidRowModel[]`| Row data (required)                      |
 | `title`        | `string`            | Optional table title                     |
 | `containerSx`  | `object`            | Custom styles for the outer Box container|
+| `bgColor`      | `string`            | Custom background color for the table    |
+| `textColor`    | `string`            | Custom text color for the table          |
+| `filterColor`  | `string`            | Custom color for filter UI elements      |
 | ...rest        | All DataGridProps   | All other DataGrid props are supported   |
 
 ---
