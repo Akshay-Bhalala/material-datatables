@@ -7,14 +7,15 @@ import {
 } from "@mui/x-data-grid";
 import { Box, Typography, useTheme } from "@mui/material";
 
-export interface MuiDataTableProps extends Omit<DataGridProps, "columns" | "rows"> {
+export interface MuiDataTableProps
+  extends Omit<DataGridProps, "columns" | "rows"> {
   columns: GridColDef[];
   rows: GridValidRowModel[];
   title?: string;
-  containerSx?: object; // custom style for outer Box
-  bgColor?: string; // custom background color
-  textColor?: string; // custom text color
-  filterColor?: string; // custom filter option color
+  containerSx?: object;
+  bgColor?: string;
+  textColor?: string;
+  filterColor?: string;
 }
 
 const MuiDataTable: React.FC<MuiDataTableProps> = ({
@@ -30,9 +31,27 @@ const MuiDataTable: React.FC<MuiDataTableProps> = ({
   const theme = useTheme();
 
   // Fallbacks for colors
-  const resolvedBgColor = bgColor || (theme.palette.mode === "dark" ? theme.palette.background.default : "#fff");
-  const resolvedTextColor = textColor || (theme.palette.mode === "dark" ? "#fff" : "#232323");
+  const resolvedBgColor =
+    bgColor ||
+    (theme.palette.mode === "dark" ? theme.palette.background.default : "#fff");
+  const resolvedTextColor =
+    textColor || (theme.palette.mode === "dark" ? "#fff" : "#232323");
   const resolvedFilterColor = filterColor || theme.palette.primary.main;
+
+  // Ensure a default height if not provided
+  const mergedContainerSx = {
+    minHeight: 300,
+    ...containerSx,
+  };
+
+  // Warn if columns or rows are empty
+  if (!columns?.length || !rows?.length) {
+    return (
+      <Box sx={{ p: 2, textAlign: "center", color: "red" }}>
+        <Typography variant="h6">No data to display</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -43,8 +62,7 @@ const MuiDataTable: React.FC<MuiDataTableProps> = ({
         color: resolvedTextColor,
         p: 2,
         width: "100%",
-        height: "100%",
-        ...containerSx,
+        ...mergedContainerSx,
       }}
     >
       {title && (
@@ -61,44 +79,47 @@ const MuiDataTable: React.FC<MuiDataTableProps> = ({
         columns={columns}
         rows={rows}
         autoHeight
-        showToolbar
         disableRowSelectionOnClick
         {...dataGridProps}
         sx={{
           border: 0,
           fontSize: 15,
           color: resolvedTextColor,
-          '& .MuiDataGrid-columnHeaders': {
+          "& .MuiDataGrid-columnHeaders": {
             bgcolor: resolvedBgColor,
             color: resolvedTextColor,
-            fontWeight: 'bold',
+            fontWeight: "bold",
           },
-          '& .MuiDataGrid-toolbarContainer': {
+          "& .MuiDataGrid-toolbarContainer": {
             bgcolor: resolvedBgColor,
             color: resolvedTextColor,
           },
-          '& .MuiDataGrid-filterForm': {
+          "& .MuiDataGrid-filterForm": {
             bgcolor: resolvedBgColor,
             color: resolvedFilterColor,
           },
-          '& .MuiDataGrid-panelFooter': {
+          "& .MuiDataGrid-panelFooter": {
             bgcolor: resolvedBgColor,
             color: resolvedTextColor,
           },
-          '& .MuiDataGrid-menu': {
+          "& .MuiDataGrid-menu": {
             bgcolor: resolvedBgColor,
             color: resolvedFilterColor,
           },
-          '& .MuiDataGrid-row, & .MuiDataGrid-cell': {
+          "& .MuiDataGrid-row, & .MuiDataGrid-cell": {
             color: resolvedTextColor,
+          },
+          // Filter chip color (when filter is applied)
+          "& .MuiDataGrid-filteredChip, & .MuiChip-root": {
+            bgcolor: resolvedFilterColor,
+            color: theme.palette.getContrastText(resolvedFilterColor),
+            fontWeight: 600,
           },
         }}
-        // Inline styles here (not passed as sx)
         style={{
           border: 0,
           fontSize: 15,
         }}
-        // Internal class styling via classes or CSS is best for full control
       />
     </Box>
   );

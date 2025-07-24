@@ -69,14 +69,14 @@ function App() {
         containerSx={{
           height: 500,
           width: "100%",
-          boxShadow: "0 8px 32px rgba(255, 0, 0, 0.18)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.18)",
           borderRadius: 12,
           background: "#fff",
           margin: "0 auto",
         }}
-        bgColor="white" // Custom background color
-        textColor="black" // Custom text color
-        filterColor="blue" // Custom filter option color
+        bgColor="#22223b" // Custom background color
+        textColor="#f2e9e4" // Custom text color
+        filterColor="#9a8c98" // Custom filter option color (also sets filter chip color)
         pageSizeOptions={[5, 10, 25, 100]}
         checkboxSelection
         disableRowSelectionOnClick
@@ -96,8 +96,9 @@ export default App;
 
 - **Sorting, Filtering, Pagination:** All built-in DataGrid features are supported via props.
 - **Styling:** Use `containerSx` for the outer container, or `className` for custom CSS.
-- **Color Customization:** Use `bgColor`, `textColor`, and `filterColor` props to control the background, text, and filter UI colors. 
-  - **Accessibility:** The filter panel always uses a white background and readable text color, so filter options are always visible. The `filterColor` prop customizes highlights (checkboxes, focus) in the filter panel.
+- **Color Customization:**
+  - Use `bgColor`, `textColor`, and `filterColor` props to control the background, text, and filter UI colors.
+  - The `filterColor` prop also controls the color of the filter chip (the label that appears when a filter is active).
 - **Event Handling:** Use any DataGrid event prop (e.g., `onRowClick`, `onSortModelChange`).
 - **Custom Columns:** Use `valueGetter`, `renderCell`, etc. for advanced column logic.
 - **Row Selection:** Enable with `checkboxSelection`.
@@ -115,12 +116,15 @@ export default App;
   pageSizeOptions={[5, 10, 25]}
   bgColor="#232323"
   textColor="#fff"
-  filterColor="#1976d2"
+  filterColor="#1976d2" // This will also set the filter chip color
   onRowClick={(params) => alert(`Clicked row ID: ${params.id}`)}
   containerSx={{ maxWidth: 900, margin: '2rem auto', background: '#fff' }}
 />
-// Note: The filter panel always uses a white background and readable text color for accessibility, regardless of table background/text color. The filterColor prop still customizes highlights (checkboxes, focus) in the filter panel.
 ```
+
+---
+
+**Note:** When you apply a filter, the filter chip (label) color will match the `filterColor` you provide.
 
 ---
 
@@ -134,7 +138,7 @@ export default App;
 | `containerSx`  | `object`            | Custom styles for the outer Box container|
 | `bgColor`      | `string`            | Custom background color for the table    |
 | `textColor`    | `string`            | Custom text color for the table          |
-| `filterColor`  | `string`            | Custom color for filter UI highlights    |
+| `filterColor`  | `string`            | Custom color for filter UI elements and filter chip |
 | ...rest        | All DataGridProps   | All other DataGrid props are supported   |
 
 ---
