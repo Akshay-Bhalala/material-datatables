@@ -33,7 +33,7 @@ You must also have these installed in your project:
 
 Below is an example screenshot of the MuiDataTable in action:
 
-![MuiDataTable Example](./public/mui-datatable-screenshot.png)
+![MuiDataTable Snapshot](./public/mui-datatable-screenshot.png)
 
 ---
 
