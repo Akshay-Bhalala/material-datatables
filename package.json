@@ -1,6 +1,6 @@
 {
   "name": "material-datatables",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A fully-featured, customizable Material UI Data Table React component with sorting, filtering, pagination, selection, and more.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
