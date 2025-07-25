@@ -43,35 +43,142 @@ npm install material-datatables
 ## 🛠️ Usage
 
 ```tsx
+import React from 'react';
 import { MuiDataTable } from 'material-datatables';
+import './App.css'; 
 
-const columns = [
+// Define the column types based on the expected MuiDataTableColumn interface
+interface MuiDataTableColumn {
+  field: string;
+  headerName: string;
+  sortable?: boolean;
+  filterable?: boolean;
+  visible?: boolean;
+  sx?: React.CSSProperties;
+  className?: string;
+  renderCell?: (value: any, row: any, rowIndex: number) => React.ReactNode;
+}
+
+// Define the row type based on the expected MuiDataTableRow interface
+interface MuiDataTableRow {
+  id?: string | number;
+  [key: string]: any;
+}
+
+// Define the pagination type
+interface Pagination {
+  page: number;
+  pageSize: number;
+  pageSizeOptions?: number[];
+}
+
+// Define the sort model type
+interface MuiDataTableSortModel {
+  field: string;
+  direction: 'asc' | 'desc';
+}
+
+// Define the filter model type
+interface MuiDataTableFilterModel {
+  [key: string]: string;
+}
+
+// Define the toolbar action type
+interface MuiDataTableToolbarAction {
+  label: string;
+  icon: React.ReactNode;
+  onClick: () => void;
+}
+
+const columns: MuiDataTableColumn[] = [
   { field: 'id', headerName: 'ID', sortable: true },
   { field: 'name', headerName: 'Name', filterable: true },
   { field: 'email', headerName: 'Email', filterable: true },
 ];
 
-const rows = [
+const rows: MuiDataTableRow[] = [
   { id: 1, name: 'Alice', email: 'alice@example.com' },
   { id: 2, name: 'Bob', email: 'bob@example.com' },
-  // ...
+  { id: 3, name: 'Charlie', email: 'charlie@example.com' },
 ];
 
-export default function DemoTable() {
+export default function App() {
+  // State to manage controlled props
+  const [pagination, setPagination] = React.useState<Pagination>({ page: 0, pageSize: 10, pageSizeOptions: [5, 10, 25] });
+  const [sortModel, setSortModel] = React.useState<MuiDataTableSortModel | undefined>(undefined);
+  const [filterModel, setFilterModel] = React.useState<MuiDataTableFilterModel>({});
+  const [columnVisibilityModel, setColumnVisibilityModel] = React.useState<Record<string, boolean>>({
+    id: true,
+    name: true,
+    email: true,
+  });
+  const [selectedRows, setSelectedRows] = React.useState<MuiDataTableRow[]>([]);
+
+  // Handlers for controlled props
+  const handlePaginationChange = (newPagination: Pagination) => {
+    setPagination(newPagination);
+  };
+
+  const handleSortModelChange = (newSortModel: MuiDataTableSortModel) => {
+    setSortModel(newSortModel);
+  };
+
+  const handleFilterModelChange = (newFilterModel: MuiDataTableFilterModel) => {
+    setFilterModel(newFilterModel);
+  };
+
+  const handleColumnVisibilityChange = (newColumnVisibilityModel: Record<string, boolean>) => {
+    setColumnVisibilityModel(newColumnVisibilityModel);
+  };
+
+  const handleRowClick = (row: MuiDataTableRow, rowIndex: number) => {
+    console.log('Row clicked:', row, 'at index:', rowIndex);
+  };
+
+  const handleSelectionChange = (selectedRows: MuiDataTableRow[]) => {
+    setSelectedRows(selectedRows);
+    console.log('Selected rows:', selectedRows);
+  };
+
+  // Custom toolbar action
+  const customToolbarActions: MuiDataTableToolbarAction[] = [
+    {
+      label: 'Custom Action',
+      icon: <span>⚙️</span>,
+      onClick: () => console.log('Custom action triggered'),
+    },
+  ];
+
   return (
     <MuiDataTable
       title="User List"
       columns={columns}
       rows={rows}
-      showSearch
-      showDownload
-      checkboxSelection
-      pagination={{ page: 0, pageSize: 10, pageSizeOptions: [5, 10, 25] }}
-      tableColor="#fff"
-      tableTextColor="#222"
+      loading={false} // Example: not loading
+      pagination={pagination}
+      onPaginationChange={handlePaginationChange}
+      sortModel={sortModel}
+      onSortModelChange={handleSortModelChange}
+      filterModel={filterModel}
+      onFilterModelChange={handleFilterModelChange}
+      onRowClick={handleRowClick}
+      onSelectionChange={handleSelectionChange}
+      checkboxSelection={true}
+      disableSelectionOnClick={false}
+      columnVisibilityModel={columnVisibilityModel}
+      onColumnVisibilityChange={handleColumnVisibilityChange}
+      toolbarActions={customToolbarActions}
+      showSearch={true}
+      showDownload={true}
+      sx={{ borderRadius: 8, boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)' }}
+      className="custom-table-class" // Optional custom class
+      style={{ margin: '20px auto' }} // Optional inline styles
+      themeOverrides={{ table: { border: '1px solid #e0e0e0' } }} // Optional theme overrides
+      virtualization={false} // Example: disable virtualization
       rowHeight={48}
-      sx={{ borderRadius: 8, boxShadow: '0 2px 8px #eee' }}
-      // You can also use className or themeOverrides for further customization
+      tableColor="#ffffff"
+      tableTextColor="#212121"
+      ariaLabel="User Data Table" // Optional ARIA label
     />
   );
 }
