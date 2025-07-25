@@ -38,12 +38,6 @@ A fully-featured, customizable Material UI Data Table React component with sorti
 npm install material-datatables
 ```
 
-or
-
-```bash
-yarn add material-datatables
-```
-
 ---
 
 ## 🛠️ Usage
