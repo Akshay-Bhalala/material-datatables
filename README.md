@@ -261,4 +261,4 @@ MIT
 ---
 
 ## 💡 Contributing
-Pull requests and issues are welcome! Please open an issue or PR on [GitHub](https://github.com/yourusername/material-datatables).
+Pull requests and issues are welcome! Please open an issue or PR on [GitHub](https://github.com/Akshay-Bhalala/material-datatables.git).
