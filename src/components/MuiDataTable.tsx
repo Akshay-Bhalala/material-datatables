@@ -4,7 +4,11 @@ import styles from './MuiDataTable.module.css';
 
 const DEFAULT_PAGE_SIZE_OPTIONS = [5, 10, 25, 50, 100];
 
-const MuiDataTable: React.FC<MuiDataTableProps> = (props: MuiDataTableProps) => {
+interface MuiDataTablePropsWithTitle extends MuiDataTableProps {
+  title?: string;
+}
+
+const MuiDataTable: React.FC<MuiDataTablePropsWithTitle> = (props: MuiDataTablePropsWithTitle) => {
   const {
     columns,
     rows,
@@ -33,6 +37,7 @@ const MuiDataTable: React.FC<MuiDataTableProps> = (props: MuiDataTableProps) => 
     tableColor,
     tableTextColor,
     ariaLabel,
+    title = 'Data Table',
   } = props;
 
   // Controlled/uncontrolled pagination state
@@ -261,8 +266,8 @@ const MuiDataTable: React.FC<MuiDataTableProps> = (props: MuiDataTableProps) => 
 
   return (
     <div className="mui-datatable-outer">
-      <div className="mui-datatable-header">User List</div>
       <div className="mui-datatable-card">
+        <div className="mui-datatable-title">{title}</div>
         <div className="mui-datatable-toolbar">
           <div className="mui-datatable-toolbar-left">
             {/* Column selector */}

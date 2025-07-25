@@ -13,6 +13,7 @@ A fully-featured, customizable Material UI Data Table React component with sorti
 - Row selection (checkboxes, select all)
 - **Modern, responsive, and attractive UI**
 - **Large, white, rounded card layout with shadow**
+- **Customizable, bold, centered table title inside the card**
 - **Toolbar with aligned controls (column selector, search, download, actions)**
 - **Dark background with light table for high contrast**
 - **CSS module-based styling for easy customization**
@@ -65,11 +66,11 @@ const rows = [
 export default function DemoTable() {
   return (
     <MuiDataTable
+      title="User List"
       columns={columns}
       rows={rows}
       showSearch
       showDownload
-      toolbarActions={actions}
       checkboxSelection
       pagination={{ page: 0, pageSize: 10, pageSizeOptions: [5, 10, 25] }}
       tableColor="#fff"
@@ -87,7 +88,8 @@ export default function DemoTable() {
 ## 🧩 UI Structure
 
 - The table is displayed inside a **large, white, rounded card** with a subtle shadow, centered on a dark background.
-- The **toolbar** sits at the top of the card, with all controls (column selector, search, download, custom actions) aligned in a single row and visually separated by a border.
+- The **title** appears as a bold, centered heading at the top of the card, customizable via the `title` prop.
+- The **toolbar** sits below the title, with all controls (column selector, search, download, custom actions) aligned in a single row and visually separated by a border.
 - The **table** is full-width, with clear headers, zebra striping, hover and selected row effects, and responsive design.
 - **Pagination** controls are aligned to the bottom right of the card.
 - All controls are accessible and visually organized for a professional, MUI-like appearance.
@@ -98,6 +100,7 @@ export default function DemoTable() {
 
 | Prop                    | Type                        | Description |
 |-------------------------|-----------------------------|-------------|
+| `title`                 | `string`                    | Table title, shown as a bold, centered heading inside the card |
 | `columns`               | `MuiDataTableColumn[]`      | Column definitions |
 | `rows`                  | `MuiDataTableRow[]`         | Table data rows |
 | `loading`               | `boolean`                   | Show loading overlay |
@@ -130,9 +133,10 @@ export default function DemoTable() {
 
 ## 🎨 Customization
 - **Styling:**
-  - The table uses a CSS module (`MuiDataTable.module.css`) for all layout and visual styles, including the card, toolbar, table, and pagination.
+  - The table uses a CSS module (`MuiDataTable.module.css`) for all layout and visual styles, including the card, title, toolbar, table, and pagination.
   - You can override styles by providing your own CSS module or by using the `className`, `sx`, or `themeOverrides` props.
-  - The default look is a dark background with a large, white, rounded card and a modern, MUI-like toolbar and table.
+  - The default look is a dark background with a large, white, rounded card, a bold, centered title, and a modern, MUI-like toolbar and table.
+- **Title:** Use the `title` prop to set a custom table title, which appears as a bold, centered heading inside the card.
 - **Toolbar:** Add custom actions, search, and download. All controls are aligned and visually separated for clarity.
 - **Columns:** Use `renderCell` for custom cell rendering.
 - **Accessibility:** ARIA attributes included by default.
