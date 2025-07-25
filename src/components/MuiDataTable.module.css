@@ -1,124 +1,118 @@
-.mui-datatable-root {
-  background: #222;
-  border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
-  padding: 2rem;
-  max-width: 900px;
-  margin: 5vh auto;
-  min-width: 350px;
-  width: 90vw;
+.mui-datatable-outer {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
+  padding: 3vh 0;
+  background: #222;
+  min-height: 100vh;
 }
-
 .mui-datatable-header {
-  color: #fff;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 700;
+  margin-bottom: 2rem;
+  color: #fff;
   text-align: center;
-  margin-bottom: 1.5rem;
-  letter-spacing: 1px;
 }
-
+.mui-datatable-card {
+  background: #fff;
+  border-radius: 32px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+  max-width: 1200px;
+  width: 95vw;
+  min-width: 350px;
+  display: flex;
+  flex-direction: column;
+}
 .mui-datatable-toolbar {
   display: flex;
-  gap: 1rem;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 1.5rem;
+  gap: 2rem;
   flex-wrap: wrap;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
 }
-
-.mui-datatable-columns label {
-  color: #fff;
+.mui-datatable-toolbar-left,
+.mui-datatable-toolbar-center,
+.mui-datatable-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.mui-datatable-toolbar-left label {
+  color: #333;
   font-weight: 500;
   margin-right: 0.5rem;
 }
-.mui-datatable-columns select {
+.mui-datatable-toolbar-left select {
   min-width: 120px;
   border-radius: 6px;
   padding: 0.3rem 0.5rem;
-  border: 1px solid #444;
-  background: #333;
-  color: #fff;
+  border: 1px solid #bbb;
+  background: #fafbfc;
+  color: #222;
+  font-size: 1rem;
 }
-
-.mui-datatable-search {
-  min-width: 180px;
+.mui-datatable-toolbar-center input[type="text"] {
+  min-width: 200px;
   border-radius: 6px;
-  padding: 0.3rem 0.7rem;
-  border: 1px solid #444;
-  background: #333;
-  color: #fff;
+  padding: 0.4rem 0.9rem;
+  border: 1.5px solid #ddd;
+  background: #fafbfc;
+  color: #222;
+  font-size: 1rem;
   transition: border 0.2s;
 }
-.mui-datatable-search:focus {
+.mui-datatable-toolbar-center input[type="text"]:focus {
   border: 1.5px solid #1976d2;
   outline: none;
 }
-
-.mui-datatable-download {
-  background: #222;
-  color: #fff;
+.mui-datatable-toolbar-right button,
+.mui-datatable-action-btn {
+  background: #f5f5f5;
+  color: #222;
   border: none;
   border-radius: 8px;
   padding: 0.5rem 1.2rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   transition: background 0.2s, color 0.2s;
-}
-.mui-datatable-download:hover:not(:disabled) {
-  background: #1976d2;
-  color: #fff;
-}
-.mui-datatable-download:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.mui-datatable-actions {
-  display: flex;
-  gap: 0.5rem;
-}
-.mui-datatable-action-btn {
-  background: #333;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.4rem 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s;
   display: flex;
   align-items: center;
   gap: 0.4rem;
+  font-size: 1rem;
 }
+.mui-datatable-toolbar-right button:hover:not(:disabled),
 .mui-datatable-action-btn:hover:not(:disabled) {
   background: #1976d2;
+  color: #fff;
 }
+.mui-datatable-toolbar-right button:disabled,
 .mui-datatable-action-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-
-.mui-datatable-table-wrapper {
-  background: #fff;
-  border-radius: 12px;
-  overflow-x: auto;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  margin-bottom: 1.5rem;
+.mui-datatable-actions {
+  display: flex;
+  gap: 0.5rem;
 }
-
+.mui-datatable-table-wrapper {
+  overflow-x: auto;
+}
 .mui-datatable-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   font-size: 1.08rem;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 .mui-datatable-table th, .mui-datatable-table td {
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1.1rem;
   text-align: left;
 }
 .mui-datatable-table th {
@@ -151,8 +145,9 @@
   padding: 0.2rem 0.5rem;
   margin-top: 4px;
   font-size: 0.98rem;
+  background: #fafbfc;
+  color: #222;
 }
-
 .mui-datatable-loading-cell {
   text-align: center;
   padding: 32px;
@@ -174,24 +169,24 @@
   font-size: 1.2rem;
   font-weight: 500;
 }
-
 .mui-datatable-pagination {
   display: flex;
-  align-items: center;
   justify-content: flex-end;
+  align-items: center;
+  margin-top: 1.2rem;
   gap: 1rem;
-  margin-top: 0.5rem;
 }
 .mui-datatable-pagination select {
   border-radius: 5px;
-  border: 1px solid #444;
-  background: #333;
-  color: #fff;
+  border: 1px solid #bbb;
+  background: #fafbfc;
+  color: #222;
   padding: 0.2rem 0.7rem;
+  font-size: 1rem;
 }
 .mui-datatable-pagination button {
-  background: #333;
-  color: #fff;
+  background: #f5f5f5;
+  color: #222;
   border: none;
   border-radius: 6px;
   padding: 0.3rem 0.8rem;
@@ -201,17 +196,16 @@
 }
 .mui-datatable-pagination button:hover:not(:disabled) {
   background: #1976d2;
+  color: #fff;
 }
 .mui-datatable-pagination button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-
-@media (max-width: 600px) {
-  .mui-datatable-root {
-    padding: 0.5rem;
-    min-width: unset;
-    width: 99vw;
+@media (max-width: 900px) {
+  .mui-datatable-card {
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+    max-width: 99vw;
   }
   .mui-datatable-header {
     font-size: 1.5rem;
@@ -220,6 +214,7 @@
     flex-direction: column;
     gap: 0.7rem;
     align-items: stretch;
+    padding-bottom: 0.5rem;
   }
   .mui-datatable-table th, .mui-datatable-table td {
     padding: 0.4rem 0.5rem;

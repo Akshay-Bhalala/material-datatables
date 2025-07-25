@@ -260,206 +260,205 @@ const MuiDataTable: React.FC<MuiDataTableProps> = (props: MuiDataTableProps) => 
   const allPageRowsSelected = paginatedRows.length > 0 && paginatedRows.every((row, i) => selectedRowIds.has(getRowId(row, i)));
 
   return (
-    <div
-      className={`${styles['mui-datatable-root']}${className ? ' ' + className : ''}`}
-      style={{ ...style, ...sx, ...(themeOverrides as React.CSSProperties) }}
-      aria-label={ariaLabel}
-    >
-      {/* Header */}
-      <div className={styles['mui-datatable-header']}>{ariaLabel || 'Data Table'}</div>
-      {/* Toolbar */}
-      <div className={styles['mui-datatable-toolbar']}>
-        {/* Column management (visibility toggles) */}
-        <div className={styles['mui-datatable-columns']}>
-          <label>Columns:</label>
-          <select
-            multiple
-            value={visibleColumns.map(col => col.field)}
-            onChange={e => {
-              const options = Array.from(e.target.options);
-              const selectedFields = options.filter(o => o.selected).map(o => o.value);
-              const newModel: Record<string, boolean> = {};
-              columns.forEach(col => {
-                newModel[col.field] = selectedFields.includes(col.field);
-              });
-              if (isColumnVisibilityControlled) {
-                onColumnVisibilityChange!(newModel);
-              } else {
-                setInternalColumnVisibility(newModel);
-              }
-            }}
-            disabled={loading}
-          >
-            {columns.map(col => (
-              <option key={col.field} value={col.field}>
-                {col.headerName}
-              </option>
-            ))}
-          </select>
-        </div>
-        {/* Toolbar: global search */}
-        {showSearch && (
-          <input
-            className={styles['mui-datatable-search']}
-            type="text"
-            value={globalSearch}
-            onChange={e => setGlobalSearch(e.target.value)}
-            placeholder="Search..."
-            disabled={loading}
-          />
-        )}
-        {/* Toolbar: download button */}
-        {showDownload && (
-          <button className={styles['mui-datatable-download']} onClick={handleDownloadCSV} disabled={loading}>
-            Download CSV
-          </button>
-        )}
-        {/* Toolbar: custom actions */}
-        {toolbarActions && toolbarActions.length > 0 && (
-          <div className={styles['mui-datatable-actions']}>
-            {toolbarActions.map((action, idx) => (
-              <button key={idx} onClick={action.onClick} disabled={loading} title={action.label} className={styles['mui-datatable-action-btn']}>
-                {action.icon}
-                {action.label}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-      {/* Table */}
-      <div className={styles['mui-datatable-table-wrapper']}>
-        <table
-          className={styles['mui-datatable-table']}
-          style={{
-            width: '100%',
-            background: tableColor,
-            color: tableTextColor,
-            opacity: loading ? 0.5 : 1,
-            ...((themeOverrides && typeof themeOverrides === 'object' && 'table' in themeOverrides)
-              ? (themeOverrides.table as React.CSSProperties)
-              : {}),
-          }}
-        >
-          <thead>
-            <tr>
-              {checkboxSelection && (
-                <th>
-                  <input
-                    type="checkbox"
-                    checked={allPageRowsSelected}
-                    onChange={handleSelectAllChange}
-                    aria-label="Select all rows"
-                    disabled={loading}
-                  />
-                </th>
-              )}
-              {visibleColumns.map((col: MuiDataTableColumn) => (
-                <th
-                  key={col.field}
-                  style={col.sx as React.CSSProperties}
-                  className={col.className}
-                  onClick={() => !loading && col.sortable && handleSort(col.field)}
-                >
+    <div className="mui-datatable-outer">
+      <div className="mui-datatable-header">User List</div>
+      <div className="mui-datatable-card">
+        <div className="mui-datatable-toolbar">
+          <div className="mui-datatable-toolbar-left">
+            {/* Column selector */}
+            <label>Columns:</label>
+            <select
+              multiple
+              value={visibleColumns.map(col => col.field)}
+              onChange={e => {
+                const options = Array.from(e.target.options);
+                const selectedFields = options.filter(o => o.selected).map(o => o.value);
+                const newModel: Record<string, boolean> = {};
+                columns.forEach(col => {
+                  newModel[col.field] = selectedFields.includes(col.field);
+                });
+                if (isColumnVisibilityControlled) {
+                  onColumnVisibilityChange!(newModel);
+                } else {
+                  setInternalColumnVisibility(newModel);
+                }
+              }}
+              disabled={loading}
+            >
+              {columns.map(col => (
+                <option key={col.field} value={col.field}>
                   {col.headerName}
-                  {col.sortable && (
-                    <span className={styles['mui-datatable-sort-icon']}>
-                      {sortModel && sortModel.field === col.field
-                        ? sortModel.direction === 'asc' ? '▲' : '▼'
-                        : '↕'}
-                    </span>
-                  )}
-                  {/* Filtering controls */}
-                  {col.filterable && (
-                    <div className={styles['mui-datatable-filter']}>
-                      <input
-                        type="text"
-                        value={filterModel[col.field] || ''}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleFilterChange(col.field, e.target.value)}
-                        placeholder={`Filter...`}
-                        disabled={loading}
-                      />
-                    </div>
-                  )}
-                </th>
+                </option>
               ))}
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
+            </select>
+          </div>
+          <div className="mui-datatable-toolbar-center">
+            {/* Search */}
+            {showSearch && (
+              <input
+                className={styles['mui-datatable-search']}
+                type="text"
+                value={globalSearch}
+                onChange={e => setGlobalSearch(e.target.value)}
+                placeholder="Search..."
+                disabled={loading}
+              />
+            )}
+          </div>
+          <div className="mui-datatable-toolbar-right">
+            {/* Download, custom actions */}
+            {showDownload && (
+              <button className={styles['mui-datatable-download']} onClick={handleDownloadCSV} disabled={loading}>
+                Download CSV
+              </button>
+            )}
+            {/* Toolbar: custom actions */}
+            {toolbarActions && toolbarActions.length > 0 && (
+              <div className={styles['mui-datatable-actions']}>
+                {toolbarActions.map((action, idx) => (
+                  <button key={idx} onClick={action.onClick} disabled={loading} title={action.label} className={styles['mui-datatable-action-btn']}>
+                    {action.icon}
+                    {action.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="mui-datatable-table-wrapper">
+          {/* Table */}
+          <table
+            className={styles['mui-datatable-table']}
+            style={{
+              width: '100%',
+              background: tableColor,
+              color: tableTextColor,
+              opacity: loading ? 0.5 : 1,
+              ...((themeOverrides && typeof themeOverrides === 'object' && 'table' in themeOverrides)
+                ? (themeOverrides.table as React.CSSProperties)
+                : {}),
+            }}
+          >
+            <thead>
               <tr>
-                <td colSpan={visibleColumns.length + (checkboxSelection ? 1 : 0)} className={styles['mui-datatable-loading-cell']}>
-                  <span>Loading...</span>
-                </td>
-              </tr>
-            ) : (
-              paginatedRows.map((row: MuiDataTableRow, rowIndex: number) => {
-                const rowId = getRowId(row, rowIndex + page * pageSize);
-                const isSelected = selectedRowIds.has(rowId);
-                return (
-                  <tr
-                    key={row.id ?? rowIndex}
-                    onClick={() => {
-                      if (!checkboxSelection && onRowClick) {
-                        onRowClick(row, rowIndex + page * pageSize);
-                      } else if (checkboxSelection && !disableSelectionOnClick) {
-                        handleRowCheckboxChange(row, rowIndex + page * pageSize);
-                      }
-                    }}
-                    className={isSelected ? styles['mui-datatable-row-selected'] : ''}
-                    style={rowHeight ? { height: rowHeight } : {}}
+                {checkboxSelection && (
+                  <th>
+                    <input
+                      type="checkbox"
+                      checked={allPageRowsSelected}
+                      onChange={handleSelectAllChange}
+                      aria-label="Select all rows"
+                      disabled={loading}
+                    />
+                  </th>
+                )}
+                {visibleColumns.map((col: MuiDataTableColumn) => (
+                  <th
+                    key={col.field}
+                    style={col.sx as React.CSSProperties}
+                    className={col.className}
+                    onClick={() => !loading && col.sortable && handleSort(col.field)}
                   >
-                    {checkboxSelection && (
-                      <td>
+                    {col.headerName}
+                    {col.sortable && (
+                      <span className={styles['mui-datatable-sort-icon']}>
+                        {sortModel && sortModel.field === col.field
+                          ? sortModel.direction === 'asc' ? '▲' : '▼'
+                          : '↕'}
+                      </span>
+                    )}
+                    {/* Filtering controls */}
+                    {col.filterable && (
+                      <div className={styles['mui-datatable-filter']}>
                         <input
-                          type="checkbox"
-                          checked={isSelected}
-                          onChange={e => {
-                            e.stopPropagation();
-                            handleRowCheckboxChange(row, rowIndex + page * pageSize);
-                          }}
-                          aria-label={`Select row ${rowIndex + 1}`}
+                          type="text"
+                          value={filterModel[col.field] || ''}
+                          onChange={(e: ChangeEvent<HTMLInputElement>) => handleFilterChange(col.field, e.target.value)}
+                          placeholder={`Filter...`}
                           disabled={loading}
                         />
-                      </td>
+                      </div>
                     )}
-                    {visibleColumns.map((col: MuiDataTableColumn) => (
-                      <td key={col.field} style={col.sx as React.CSSProperties} className={col.className}>
-                        {col.renderCell ? col.renderCell(row[col.field], row, rowIndex + page * pageSize) : row[col.field]}
-                      </td>
-                    ))}
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
-        {loading && (
-          <div className={styles['mui-datatable-loading-overlay']}>
-            <span>Loading...</span>
-          </div>
-        )}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan={visibleColumns.length + (checkboxSelection ? 1 : 0)} className={styles['mui-datatable-loading-cell']}>
+                    <span>Loading...</span>
+                  </td>
+                </tr>
+              ) : (
+                paginatedRows.map((row: MuiDataTableRow, rowIndex: number) => {
+                  const rowId = getRowId(row, rowIndex + page * pageSize);
+                  const isSelected = selectedRowIds.has(rowId);
+                  return (
+                    <tr
+                      key={row.id ?? rowIndex}
+                      onClick={() => {
+                        if (!checkboxSelection && onRowClick) {
+                          onRowClick(row, rowIndex + page * pageSize);
+                        } else if (checkboxSelection && !disableSelectionOnClick) {
+                          handleRowCheckboxChange(row, rowIndex + page * pageSize);
+                        }
+                      }}
+                      className={isSelected ? styles['mui-datatable-row-selected'] : ''}
+                      style={rowHeight ? { height: rowHeight } : {}}
+                    >
+                      {checkboxSelection && (
+                        <td>
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onChange={e => {
+                              e.stopPropagation();
+                              handleRowCheckboxChange(row, rowIndex + page * pageSize);
+                            }}
+                            aria-label={`Select row ${rowIndex + 1}`}
+                            disabled={loading}
+                          />
+                        </td>
+                      )}
+                      {visibleColumns.map((col: MuiDataTableColumn) => (
+                        <td key={col.field} style={col.sx as React.CSSProperties} className={col.className}>
+                          {col.renderCell ? col.renderCell(row[col.field], row, rowIndex + page * pageSize) : row[col.field]}
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+          {loading && (
+            <div className={styles['mui-datatable-loading-overlay']}>
+              <span>Loading...</span>
+            </div>
+          )}
+        </div>
+        <div className="mui-datatable-pagination">
+          {/* Pagination */}
+          <span>Rows per page: </span>
+          <select value={pageSize} onChange={handlePageSizeChange} disabled={loading}>
+            {pageSizeOptions.map((size: number) => (
+              <option key={size} value={size}>{size}</option>
+            ))}
+          </select>
+          <span>
+            {filteredRows.length === 0
+              ? '0'
+              : `${page * pageSize + 1}-${Math.min((page + 1) * pageSize, filteredRows.length)} of ${filteredRows.length}`}
+          </span>
+          <button onClick={() => handlePageChange(Math.max(0, page - 1))} disabled={page === 0 || loading}>
+            {'<'}
+          </button>
+          <button onClick={() => handlePageChange(Math.min(totalPages - 1, page + 1))} disabled={page >= totalPages - 1 || loading}>
+            {'>'}
+          </button>
+        </div>
       </div>
-      {/* Pagination controls */}
-      <div className={styles['mui-datatable-pagination']}>
-        <span>Rows per page: </span>
-        <select value={pageSize} onChange={handlePageSizeChange} disabled={loading}>
-          {pageSizeOptions.map((size: number) => (
-            <option key={size} value={size}>{size}</option>
-          ))}
-        </select>
-        <span>
-          {filteredRows.length === 0
-            ? '0'
-            : `${page * pageSize + 1}-${Math.min((page + 1) * pageSize, filteredRows.length)} of ${filteredRows.length}`}
-        </span>
-        <button onClick={() => handlePageChange(Math.max(0, page - 1))} disabled={page === 0 || loading}>
-          {'<'}
-        </button>
-        <button onClick={() => handlePageChange(Math.min(totalPages - 1, page + 1))} disabled={page >= totalPages - 1 || loading}>
-          {'>'}
-        </button>
-      </div>
-      {/* virtualization note */}
     </div>
   );
 };

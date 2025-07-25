@@ -1,6 +1,6 @@
 # material-datatables
 
-A fully-featured, customizable Material UI Data Table React component with sorting, filtering, pagination, selection, column management, and more. Built for flexibility, performance, and beautiful UI.
+A fully-featured, customizable Material UI Data Table React component with sorting, filtering, pagination, selection, column management, and more. Built for flexibility, performance, and a beautiful, professional UI.
 
 ---
 
@@ -12,6 +12,8 @@ A fully-featured, customizable Material UI Data Table React component with sorti
 - Column visibility toggle and management
 - Row selection (checkboxes, select all)
 - **Modern, responsive, and attractive UI**
+- **Large, white, rounded card layout with shadow**
+- **Toolbar with aligned controls (column selector, search, download, actions)**
 - **Dark background with light table for high contrast**
 - **CSS module-based styling for easy customization**
 - Responsive design
@@ -46,9 +48,7 @@ yarn add material-datatables
 ## 🛠️ Usage
 
 ```tsx
-import React from 'react';
 import { MuiDataTable } from 'material-datatables';
-import { Add, Refresh } from '@mui/icons-material';
 
 const columns = [
   { field: 'id', headerName: 'ID', sortable: true },
@@ -60,19 +60,6 @@ const rows = [
   { id: 1, name: 'Alice', email: 'alice@example.com' },
   { id: 2, name: 'Bob', email: 'bob@example.com' },
   // ...
-];
-
-const actions = [
-  {
-    icon: <Add />, 
-    label: 'Add',
-    onClick: () => alert('Add clicked!'),
-  },
-  {
-    icon: <Refresh />, 
-    label: 'Refresh',
-    onClick: () => alert('Refresh clicked!'),
-  },
 ];
 
 export default function DemoTable() {
@@ -94,6 +81,16 @@ export default function DemoTable() {
   );
 }
 ```
+
+---
+
+## 🧩 UI Structure
+
+- The table is displayed inside a **large, white, rounded card** with a subtle shadow, centered on a dark background.
+- The **toolbar** sits at the top of the card, with all controls (column selector, search, download, custom actions) aligned in a single row and visually separated by a border.
+- The **table** is full-width, with clear headers, zebra striping, hover and selected row effects, and responsive design.
+- **Pagination** controls are aligned to the bottom right of the card.
+- All controls are accessible and visually organized for a professional, MUI-like appearance.
 
 ---
 
@@ -133,10 +130,10 @@ export default function DemoTable() {
 
 ## 🎨 Customization
 - **Styling:**
-  - The table uses a CSS module (`MuiDataTable.module.css`) for all layout and visual styles.
+  - The table uses a CSS module (`MuiDataTable.module.css`) for all layout and visual styles, including the card, toolbar, table, and pagination.
   - You can override styles by providing your own CSS module or by using the `className`, `sx`, or `themeOverrides` props.
-  - The default look is a dark background with a light, rounded table and modern controls.
-- **Toolbar:** Add custom actions, search, and download.
+  - The default look is a dark background with a large, white, rounded card and a modern, MUI-like toolbar and table.
+- **Toolbar:** Add custom actions, search, and download. All controls are aligned and visually separated for clarity.
 - **Columns:** Use `renderCell` for custom cell rendering.
 - **Accessibility:** ARIA attributes included by default.
 
