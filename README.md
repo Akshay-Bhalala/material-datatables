@@ -11,12 +11,21 @@ A fully-featured, customizable Material UI Data Table React component with sorti
 - Per-column and global filtering
 - Column visibility toggle and management
 - Row selection (checkboxes, select all)
+- **Modern, responsive, and attractive UI**
+- **Dark background with light table for high contrast**
+- **CSS module-based styling for easy customization**
 - Responsive design
 - Customizable styles via `sx`, `themeOverrides`, and props
 - Custom toolbar actions, search, and CSV download
 - Accessibility (ARIA attributes)
 - Virtualization-ready for large data sets
 - TypeScript support
+
+---
+
+## 🖼️ Screenshot
+
+![mui-datatable-screenshot](public/mui-datatable-screenshot.png)
 
 ---
 
@@ -55,12 +64,12 @@ const rows = [
 
 const actions = [
   {
-    icon: <Add />,
+    icon: <Add />, 
     label: 'Add',
     onClick: () => alert('Add clicked!'),
   },
   {
-    icon: <Refresh />,
+    icon: <Refresh />, 
     label: 'Refresh',
     onClick: () => alert('Refresh clicked!'),
   },
@@ -80,6 +89,7 @@ export default function DemoTable() {
       tableTextColor="#222"
       rowHeight={48}
       sx={{ borderRadius: 8, boxShadow: '0 2px 8px #eee' }}
+      // You can also use className or themeOverrides for further customization
     />
   );
 }
@@ -122,7 +132,10 @@ export default function DemoTable() {
 ---
 
 ## 🎨 Customization
-- **Styling:** Use `sx`, `className`, `style`, or `themeOverrides` for custom styles.
+- **Styling:**
+  - The table uses a CSS module (`MuiDataTable.module.css`) for all layout and visual styles.
+  - You can override styles by providing your own CSS module or by using the `className`, `sx`, or `themeOverrides` props.
+  - The default look is a dark background with a light, rounded table and modern controls.
 - **Toolbar:** Add custom actions, search, and download.
 - **Columns:** Use `renderCell` for custom cell rendering.
 - **Accessibility:** ARIA attributes included by default.

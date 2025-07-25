@@ -1,5 +1,6 @@
 import React, { useState, useMemo, ChangeEvent } from 'react';
 import { MuiDataTableProps, MuiDataTableRow, MuiDataTableColumn, MuiDataTableSortModel, MuiDataTableFilterModel, MuiDataTableToolbarAction } from '../types';
+import styles from './MuiDataTable.module.css';
 
 const DEFAULT_PAGE_SIZE_OPTIONS = [5, 10, 25, 50, 100];
 
@@ -260,15 +261,17 @@ const MuiDataTable: React.FC<MuiDataTableProps> = (props: MuiDataTableProps) => 
 
   return (
     <div
-      className={className}
+      className={`${styles['mui-datatable-root']}${className ? ' ' + className : ''}`}
       style={{ ...style, ...sx, ...(themeOverrides as React.CSSProperties) }}
       aria-label={ariaLabel}
     >
+      {/* Header */}
+      <div className={styles['mui-datatable-header']}>{ariaLabel || 'Data Table'}</div>
       {/* Toolbar */}
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+      <div className={styles['mui-datatable-toolbar']}>
         {/* Column management (visibility toggles) */}
-        <div style={{ marginRight: 16 }}>
-          <label style={{ fontWeight: 500 }}>Columns:</label>
+        <div className={styles['mui-datatable-columns']}>
+          <label>Columns:</label>
           <select
             multiple
             value={visibleColumns.map(col => col.field)}
@@ -285,7 +288,6 @@ const MuiDataTable: React.FC<MuiDataTableProps> = (props: MuiDataTableProps) => 
                 setInternalColumnVisibility(newModel);
               }
             }}
-            style={{ minWidth: 120, marginLeft: 8 }}
             disabled={loading}
           >
             {columns.map(col => (
@@ -298,25 +300,25 @@ const MuiDataTable: React.FC<MuiDataTableProps> = (props: MuiDataTableProps) => 
         {/* Toolbar: global search */}
         {showSearch && (
           <input
+            className={styles['mui-datatable-search']}
             type="text"
             value={globalSearch}
             onChange={e => setGlobalSearch(e.target.value)}
             placeholder="Search..."
-            style={{ marginRight: 12, minWidth: 180 }}
             disabled={loading}
           />
         )}
         {/* Toolbar: download button */}
         {showDownload && (
-          <button onClick={handleDownloadCSV} style={{ marginRight: 12 }} disabled={loading}>
+          <button className={styles['mui-datatable-download']} onClick={handleDownloadCSV} disabled={loading}>
             Download CSV
           </button>
         )}
         {/* Toolbar: custom actions */}
         {toolbarActions && toolbarActions.length > 0 && (
-          <div style={{ display: 'flex', gap: 8 }}>
+          <div className={styles['mui-datatable-actions']}>
             {toolbarActions.map((action, idx) => (
-              <button key={idx} onClick={action.onClick} disabled={loading} title={action.label} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+              <button key={idx} onClick={action.onClick} disabled={loading} title={action.label} className={styles['mui-datatable-action-btn']}>
                 {action.icon}
                 {action.label}
               </button>
@@ -325,8 +327,9 @@ const MuiDataTable: React.FC<MuiDataTableProps> = (props: MuiDataTableProps) => 
         )}
       </div>
       {/* Table */}
-      <div style={{ position: 'relative' }}>
+      <div className={styles['mui-datatable-table-wrapper']}>
         <table
+          className={styles['mui-datatable-table']}
           style={{
             width: '100%',
             background: tableColor,
@@ -359,7 +362,7 @@ const MuiDataTable: React.FC<MuiDataTableProps> = (props: MuiDataTableProps) => 
                 >
                   {col.headerName}
                   {col.sortable && (
-                    <span style={{ marginLeft: 4, cursor: loading ? 'not-allowed' : 'pointer' }}>
+                    <span className={styles['mui-datatable-sort-icon']}>
                       {sortModel && sortModel.field === col.field
                         ? sortModel.direction === 'asc' ? '▲' : '▼'
                         : '↕'}
@@ -367,13 +370,12 @@ const MuiDataTable: React.FC<MuiDataTableProps> = (props: MuiDataTableProps) => 
                   )}
                   {/* Filtering controls */}
                   {col.filterable && (
-                    <div style={{ marginTop: 4 }}>
+                    <div className={styles['mui-datatable-filter']}>
                       <input
                         type="text"
                         value={filterModel[col.field] || ''}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => handleFilterChange(col.field, e.target.value)}
                         placeholder={`Filter...`}
-                        style={{ width: '90%' }}
                         disabled={loading}
                       />
                     </div>
@@ -385,7 +387,7 @@ const MuiDataTable: React.FC<MuiDataTableProps> = (props: MuiDataTableProps) => 
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={visibleColumns.length + (checkboxSelection ? 1 : 0)} style={{ textAlign: 'center', padding: 32 }}>
+                <td colSpan={visibleColumns.length + (checkboxSelection ? 1 : 0)} className={styles['mui-datatable-loading-cell']}>
                   <span>Loading...</span>
                 </td>
               </tr>
@@ -403,10 +405,8 @@ const MuiDataTable: React.FC<MuiDataTableProps> = (props: MuiDataTableProps) => 
                         handleRowCheckboxChange(row, rowIndex + page * pageSize);
                       }
                     }}
-                    style={{
-                      ...(isSelected ? { background: '#e3f2fd' } : {}),
-                      ...(rowHeight ? { height: rowHeight } : {}),
-                    }}
+                    className={isSelected ? styles['mui-datatable-row-selected'] : ''}
+                    style={rowHeight ? { height: rowHeight } : {}}
                   >
                     {checkboxSelection && (
                       <td>
@@ -434,27 +434,15 @@ const MuiDataTable: React.FC<MuiDataTableProps> = (props: MuiDataTableProps) => 
           </tbody>
         </table>
         {loading && (
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            background: 'rgba(255,255,255,0.6)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            pointerEvents: 'all',
-            zIndex: 2,
-          }}>
-            <span style={{ fontSize: 18, fontWeight: 500 }}>Loading...</span>
+          <div className={styles['mui-datatable-loading-overlay']}>
+            <span>Loading...</span>
           </div>
         )}
       </div>
       {/* Pagination controls */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginTop: 8 }}>
+      <div className={styles['mui-datatable-pagination']}>
         <span>Rows per page: </span>
-        <select value={pageSize} onChange={handlePageSizeChange} style={{ margin: '0 8px' }} disabled={loading}>
+        <select value={pageSize} onChange={handlePageSizeChange} disabled={loading}>
           {pageSizeOptions.map((size: number) => (
             <option key={size} value={size}>{size}</option>
           ))}
@@ -464,17 +452,14 @@ const MuiDataTable: React.FC<MuiDataTableProps> = (props: MuiDataTableProps) => 
             ? '0'
             : `${page * pageSize + 1}-${Math.min((page + 1) * pageSize, filteredRows.length)} of ${filteredRows.length}`}
         </span>
-        <button onClick={() => handlePageChange(Math.max(0, page - 1))} disabled={page === 0 || loading} style={{ marginLeft: 8 }}>
+        <button onClick={() => handlePageChange(Math.max(0, page - 1))} disabled={page === 0 || loading}>
           {'<'}
         </button>
         <button onClick={() => handlePageChange(Math.min(totalPages - 1, page + 1))} disabled={page >= totalPages - 1 || loading}>
           {'>'}
         </button>
       </div>
-      {/*
-        virtualization: If true, implement windowing for large datasets.
-        Currently, pagination provides basic virtualization. For true windowing, consider react-window or similar in the future.
-      */}
+      {/* virtualization note */}
     </div>
   );
 };
