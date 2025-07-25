@@ -38,12 +38,6 @@ A fully-featured, customizable Material UI Data Table React component with sorti
 npm install material-datatables
 ```
 
-or
-
-```bash
-yarn add material-datatables
-```
-
 ---
 
 ## 🛠️ Usage
@@ -74,9 +68,9 @@ export default function DemoTable() {
       checkboxSelection
       pagination={{ page: 0, pageSize: 10, pageSizeOptions: [5, 10, 25] }}
       tableColor="#fff"
-      tableTextColor="#222"
+      tableTextColor="#212121"
       rowHeight={48}
-      sx={{ borderRadius: 8, boxShadow: '0 2px 8px #eee' }}
+      sx={{ borderRadius: 8, boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)' }}
       // You can also use className or themeOverrides for further customization
     />
   );
